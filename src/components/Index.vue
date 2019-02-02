@@ -9,7 +9,7 @@
             <div class="col-10">
                 <div class="form-group">
                     <label for="keep">Nueva tarea</label>
-                    <input v-model="newKeep" class="form-control" id="keep">
+                    <input autocomplete="off" v-model="newKeep" class="form-control" id="keep">
                 </div>
             </div>
             <div class="col-2">
@@ -35,7 +35,7 @@
                     <tr v-for="keep in keeps" :key="keep.id">
                         <td scope="row">{{keep.id}}</td>
                         <td>
-                            <span v-if="formUpdate">
+                            <span v-if="keep.editable == false">
                                 {{keep.description}}
                             </span>
                             <span v-else>
@@ -43,7 +43,7 @@
                             </span>
                         </td>
                         <td>
-                            <span v-if="formUpdate">
+                            <span v-if="keep.editable == false">
                                 <button @click="showForm(keep)" class="btn btn-warning">Editar</button>
                             </span>
                             <span v-else>
@@ -66,23 +66,22 @@ export default {
         return {
             keeps: [
                 {
-                    id: 1,
-                    editable: false,
+                    id: Math.floor((Math.random() * 100000) + 1),
                     description: 'Comprar leche mañana',
+                    editable: false,
                 },
                 {
-                    id: 2,
-                    editable: false,
+                    id: Math.floor((Math.random() * 100000) + 1),
                     description: 'Google es gay',
+                    editable: false,
                 },
                 {
-                    id: 3,
-                    editable: false,
+                    id: Math.floor((Math.random() * 100000) + 1),
                     description: 'Subscribe to pewdiepie',
+                    editable: false,
                 }
             ],
             newKeep: '',
-            formUpdate: true,
             newKeepUpdate: '',
         }
     },
@@ -90,7 +89,7 @@ export default {
         addKeep(newKeep) {
             this.keeps.push(
                 {
-                    id: 5,
+                    id: Math.floor((Math.random() * 100000) + 1),
                     description: newKeep,
                     editable: false,
                 }
@@ -98,14 +97,14 @@ export default {
             this.newKeep = '';
         },
         deleteKeep(keep) {
-            this.keeps.splice(find(keep.description = keep),1)
+            this.keeps.splice(keep,1)
         },
-        showForm(Keep) {
+        showForm(keep) {
             this.newKeepUpdate = keep;
-            this.formUpdate = true;
+            this.keep.editable = true;
         },
         updateKeep(keep) {
-            this.formUpdate = false;
+            this.keep.editable = false;
         }
     }
 }
